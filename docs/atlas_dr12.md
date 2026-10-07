@@ -95,7 +95,7 @@ uses **synthetic**, not Hybrid-production, events, with known RAA=0.5 in all
 15 published Delta R12 bins. Its outputs are under
 `validation/atlas_dr12/synthetic_smoke`. The smoke refuses to overwrite a run.
 Use `--output /new/path` to repeat it. Optional-feature tests skip if the native
-module is not built; the dedicated CI job builds it explicitly before testing.
+module is not built; run the build command above before validating this feature.
 Set `ATLAS_DR12_DATA_DIR` to the independently extracted experimental Data
 directory to also check the exact bin edges against the archive; no private/local
 data files are required for the portable tests.
