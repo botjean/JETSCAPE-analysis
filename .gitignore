@@ -1,6 +1,8 @@
 __pycache__/
 .mypy_cache/
 build/
+jetscape_analysis/analysis/_atlas_dr12*.so
+validation/atlas_dr12/
 jetscape_analysis.egg-info/
 jetscape_analysis/_version.py
 

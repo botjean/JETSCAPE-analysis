@@ -77,6 +77,8 @@ def retrieve_lines_from_end_of_file(
     Returns:
         The file contents from the character_to_search_for to the end of the file, assuming it's found.
     """
+    if read_chunk_size <= 0:
+        raise ValueError("read_chunk_size must be positive")
     last_line = ""
     while True:
         # We grab chunks from the end of the file towards the beginning until we
@@ -88,11 +90,13 @@ def retrieve_lines_from_end_of_file(
         f.seek(0, os.SEEK_END)
         # Then, just back from the current position (based on SEEK_SET and tell()
         # of the current position).
-        f.seek(f.tell() - len(last_line) - read_chunk_size, os.SEEK_SET)
+        available = f.tell() - len(last_line)
+        n_read = min(read_chunk_size, available)
+        f.seek(available - n_read, os.SEEK_SET)
         # NOTE: This chunk isn't necessarily going back read_chunk_size characters, but
         #       rather just some number of bytes. Depending on the encoding, it may be.
         #       In any case, we don't care - we're just looking for the last line.
-        chunk = f.read(read_chunk_size)
+        chunk = f.read(n_read)
 
         if not chunk:
             # The whole file is one big line

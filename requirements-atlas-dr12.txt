@@ -1,0 +1,12 @@
+# Isolated, tested dependencies; do not install over the Bayesian environment.
+fastjet==3.5.2.0
+pybind11==3.1.0
+particle==1.0.1
+numpy==2.5.3
+pandas==3.0.6
+pyarrow==25.0.1
+awkward==2.14.0
+vector==1.9.0
+PyYAML==6.0.3
+pytest==9.1.1
+polars==2.0.0
