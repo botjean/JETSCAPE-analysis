@@ -1,12 +1,15 @@
 // Particle-level reconstruction for arXiv:2504.04805, sections 4--5.
 // This deliberately declusters the kt tree, not a Cambridge/Aachen tree.
 #include <fastjet/ClusterSequence.hh>
+#include <fastjet/contrib/LundGenerator.hh>
+#include <fastjet/contrib/SoftDrop.hh>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <array>
 #include <cmath>
 #include <map>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace py = pybind11;
@@ -28,12 +31,45 @@ class SignedRecombiner : public fastjet::JetDefinition::Recombiner {
   }
 };
 
+// Independent reference matching heppy fjext/fjtools.cxx (Tachibana adaptation).
+// Diagnostic only: marker 0 reproduces its default, -1 preserves composite signs.
+class LegacyRecombinerReference : public fastjet::JetDefinition::Recombiner {
+ public:
+  explicit LegacyRecombinerReference(int marker) : marker_(marker) {}
+  std::string description() const override { return "legacy heppy recombination reference"; }
+  void recombine(const PseudoJet &a, const PseudoJet &b, PseudoJet &out) const override {
+    int ca = a.user_index() < 0 ? -1 : 1;
+    int cb = b.user_index() < 0 ? -1 : 1;
+    out = ca*a + cb*b;
+    if (out.E() < 0) {
+      out.set_user_index(marker_);
+      out.reset_momentum(-out.px(), -out.py(), -out.pz(), -out.E());
+    } else {
+      out.set_user_index(0);
+    }
+  }
+ private:
+  int marker_;
+};
+
 // Each input row: px, py, pz, E, sign (+1/-1), calorimeter-input, track-input.
 py::dict reconstruct(const std::vector<std::array<double, 7>> &rows,
-                     double ghost_pt = 1e-9) {
+                     double ghost_pt = 1e-9,
+                     std::string recombiner_mode = "signed",
+                     std::string groomer = "lund", int legacy_marker = -1) {
   if (!std::isfinite(ghost_pt) || ghost_pt <= 0 || ghost_pt > 1e-6)
     throw std::invalid_argument("ghost_pt must be positive and <= 1e-6 GeV");
-  SignedRecombiner recombiner;
+  if (recombiner_mode != "signed" && recombiner_mode != "legacy_reference")
+    throw std::invalid_argument("Unknown recombiner mode");
+  if (groomer != "signed_prongs" && groomer != "lund" && groomer != "softdrop_reference")
+    throw std::invalid_argument("Unknown groomer mode");
+  if (legacy_marker != -1 && legacy_marker != 0)
+    throw std::invalid_argument("Reference marker must be -1 or 0");
+  SignedRecombiner signed_recombiner;
+  LegacyRecombinerReference legacy_recombiner(legacy_marker);
+  const fastjet::JetDefinition::Recombiner *recombiner = recombiner_mode == "signed"
+      ? static_cast<const fastjet::JetDefinition::Recombiner *>(&signed_recombiner)
+      : static_cast<const fastjet::JetDefinition::Recombiner *>(&legacy_recombiner);
   std::vector<PseudoJet> particles, tracks;
   std::map<std::string, int> counts{{"small_jets", 0}, {"negative_small_jets", 0},
     {"large_jets", 0}, {"fiducial_jets", 0}, {"charged_fraction_pass", 0},
@@ -48,7 +84,7 @@ py::dict reconstruct(const std::vector<std::array<double, 7>> &rows,
     if (r[6] != 0 && p.pt() > 4 && std::abs(p.eta()) < 2.5) tracks.push_back(p);
   }
   fastjet::JetDefinition small_def(fastjet::antikt_algorithm, 0.2);
-  small_def.set_recombiner(&recombiner);
+  small_def.set_recombiner(recombiner);
   fastjet::ClusterSequence small_cs(particles, small_def);
   std::vector<PseudoJet> large_inputs;
   for (const auto &p : small_cs.inclusive_jets()) {
@@ -92,13 +128,39 @@ py::dict reconstruct(const std::vector<std::array<double, 7>> &rows,
     if (fraction <= 0.2) continue;
     ++counts["charged_fraction_pass"];
     fastjet::JetDefinition kt_def(fastjet::kt_algorithm, 2.5);
-    kt_def.set_recombiner(&recombiner);
+    kt_def.set_recombiner(recombiner);
     fastjet::ClusterSequence kt_cs(associated, kt_def);
     auto kt_jets = kt_cs.inclusive_jets();
     if (kt_jets.size() != 1)
       throw std::runtime_error("Associated tracks did not form one kt R=2.5 jet");
     PseudoJet current = kt_jets[0], a, b;
     bool accepted = false;
+    if (groomer == "lund") {
+      // Same first-passing-Lund-splitting rule as heppy GroomerShop::soft_drop.
+      fastjet::contrib::LundGenerator lund(kt_def);
+      for (const auto &split : lund.result(current)) {
+        if (split.z() > 0.15) {
+          output.push_back({jet.pt(), split.Delta(), split.kt(), fraction});
+          accepted = true;
+          break;
+        }
+      }
+    } else if (groomer == "softdrop_reference") {
+      fastjet::contrib::SoftDrop sd(0, 0.15, 2.5);
+      sd.set_reclustering(false);  // The measurement requires the existing kt tree.
+      sd.set_tagging_mode();
+      PseudoJet groomed = sd(current);
+      if (groomed != 0 && groomed.has_parents(a, b)) {
+        const double dr = a.delta_R(b);
+        output.push_back({jet.pt(), dr, std::min(a.pt(), b.pt())*dr, fraction});
+        accepted = true;
+      }
+    }
+    if (groomer != "signed_prongs") {
+      if (accepted) ++counts["accepted_jets"];
+      else ++counts["grooming_failed"];
+      continue;
+    }
     while (current.has_parents(a, b)) {
       // A negative wake branch is not a physical Soft-Drop prong.
       if (a.user_index() < 0 || b.user_index() < 0) {
@@ -127,5 +189,7 @@ py::dict reconstruct(const std::vector<std::array<double, 7>> &rows,
 
 PYBIND11_MODULE(_atlas_dr12, m) {
   m.doc() = "Native FastJet ATLAS charged kt-splitting reconstruction";
-  m.def("reconstruct", &reconstruct, py::arg("particles"), py::arg("ghost_pt") = 1e-9);
+  m.def("reconstruct", &reconstruct, py::arg("particles"), py::arg("ghost_pt") = 1e-9,
+        py::arg("recombiner_mode") = "signed", py::arg("groomer") = "lund",
+        py::arg("legacy_marker") = -1);
 }

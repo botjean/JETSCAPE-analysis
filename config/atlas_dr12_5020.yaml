@@ -2,6 +2,15 @@
 sqrt_s: 5020
 jet_pt: [200, 251]
 centrality: [0, 10]
+# Preserve the existing Hybrid input convention. decay_gg is a sensitivity test.
+pi0_treatment: keep
+pi0_decay_seed: 0
+# Match the old weighted per-jet histogram errors. event is an explicit alternative.
+mc_error: per_jet
+# Same first-passing Lund split as GroomerShop, using the measurement's kt tree.
+grooming: lund
+# Preserve negative composite signs; the old default marker 0 is diagnostic-only.
+negative_recombiner: sign_preserving
 observables:
   dr12_atlas:
     column: 1

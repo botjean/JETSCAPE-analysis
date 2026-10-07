@@ -24,8 +24,10 @@ buffer previously raised `ValueError`. Existing parser regressions are included.
 
 Implemented from [arXiv:2504.04805v2, sections 4-5](https://arxiv.org/html/2504.04805v2):
 
-- Particle-level anti-kt R=0.2, pT>35 GeV, |eta|<3; exclude muons/neutrinos
-  from calorimetric inputs. Stable particles must have lifetime >30 ps.
+- Anti-kt R=0.2, pT>35 GeV, |eta|<3; exclude muons/neutrinos from
+  calorimetric inputs. ATLAS defines stable particles with lifetime >30 ps;
+  the default Hybrid input convention below is an explicit approximation to
+  that definition, not a claim that generator decays have been matched.
 - Recluster selected small jets with anti-kt R=1.0; |eta|<1.3 and pT>200 GeV.
 - Ghost-associate charged tracks, pT>4 GeV and |eta|<2.5, using 1 eV ghosts
   in that same R=1.0 clustering. Restore track four-vectors afterward.
@@ -40,27 +42,48 @@ Implemented from [arXiv:2504.04805v2, sections 4-5](https://arxiv.org/html/2504.
 Muon exclusion is for the calorimetric inputs; charged stable muons can enter
 the track list. No detector efficiency or detector-quality cuts are applied to
 truth particles. The input format has no ancestry: correct decay/primary-particle
-production must be confirmed, not reconstructed from a PID list. Short-lived
-final-state particles cause an error: dropping an undecayed pi0 would lose its
-energy, not implement the measurement. Unknown PDG/status values also fail.
+production must be confirmed, not reconstructed from a PID list. By default,
+`pi0_treatment: keep` retains the supplied Hybrid particles, including undecayed
+pi0, without a lifetime veto. Charged PID selection matches the old STAT list.
+Unknown PDG/status values still fail. This replaces the draft v2 lifetime
+rejection, which was incompatible with the production files.
+
+`pi0_treatment: decay_gg` is an explicit sensitivity test: force each retained
+pi0 into two isotropic photons, with both daughters inheriting the wake sign.
+It is not a full branching-ratio decay model (in particular, no Dalitz channel)
+or a correction for every other generator decay convention. The random seed is
+configured by `pi0_decay_seed`; event-content hashing makes file chunking/order
+irrelevant. Float32 input can erase the small pi0 invariant mass, so the decay
+restores the PDG mass at fixed three-momentum. Energy changes are recorded in
+`particle_qa`; changes exceeding 1e-5 times max(1 GeV, E) fail. No other species
+are decayed. The default keep mode changes no particle four-vectors.
+
+Version v4 records treatment, grooming, error and normalization conventions and
+refuses to combine different definitions or older output. See
+[the behavioral audit](atlas_dr12_compatibility_audit.md).
 
 ### Hybrid wake prescription
 
 Status -2 partons are excluded. pp uses status 0 only. PbPb uses 0/1 positively
 and 2 negatively, as the Hybrid branch specifies. Small-jet and charged kt
 clustering use signed four-vector recombination. Net-negative small jets cannot
-seed physical large jets. The charged scalar sum is signed; negative branches
-cannot serve as physical Soft-Drop prongs and are skipped when declustering.
+seed physical large jets. The charged scalar sum is signed. The default
+`grooming: lund` selects the first passing split from upstream LundGenerator,
+matching the old GroomerShop selection on the specified kt tree. The previous
+custom walk that skips negative prongs is available only through explicit
+`grooming: signed_prongs`; these prescriptions are not universally equivalent.
 Ghosts carry association labels, not wake signs; original signed tracks are
 restored before the charged clustering. There is no double subtraction.
 
 This is an explicit **model-side wake prescription**, not something specified
-by the experimental particle-level definition. Compare it with the collaborator's
-production prescription on real events before accepting physics predictions.
+by the experimental particle-level definition. Local real-event comparisons
+are recorded below; they do not establish production-wide equivalence.
 In particular, heppy's `NegativeEnergyRecombiner()` defaults its negative
 composite marker to zero. The implementation here uses -1 (equivalent to explicitly
 constructing its recombiner with a negative marker), preserving the sign through
-subsequent merges. The existing STAT code is not altered. This finding alone
+subsequent merges. Config `negative_recombiner: sign_preserving` is the supported
+production mode; the marker-zero implementation is a QA reference only.
+The existing STAT code is not altered. This finding alone
 does not establish that the previous table production was affected.
 
 FastJet clustering is native C++, bound through pybind11. This avoids the
@@ -96,8 +119,8 @@ uses **synthetic**, not Hybrid-production, events, with known RAA=0.5 in all
 `validation/atlas_dr12/synthetic_smoke`. The smoke refuses to overwrite a run.
 Use `--output /new/path` to repeat it. Optional-feature tests skip if the native
 module is not built; run the build command above before validating this feature.
-Set `ATLAS_DR12_DATA_DIR` to the independently extracted experimental Data
-directory to also check the exact bin edges against the archive; no private/local
+Set `ATLAS_DR12_DATA_DIR` to the independently extracted table root containing
+`Data/` to also check the exact bin edges against the archive; no private/local
 data files are required for the portable tests.
 
 ## Generate one sample
@@ -124,12 +147,16 @@ The confirmation flags are substantive: verify generator decays, that the input
 is not detector-level or minimum-bias/UE-embedded, and that the header cross
 sections/event weights have the STAT hard-process normalization. These cannot
 be inferred from the file name. Centrality here declares the sample interval;
-it does not turn a 0-5% sample into a 0-10% sample. Geometry weighting across
-centrality sub-bins must be established separately. No outlier rejection is
+it does not turn a 0-5% sample into a 0-10% sample. With a 0-10% target config,
+analyze its inputs using `--centrality 0 5` and `--centrality 5 10`, respectively,
+then use the explicit mixture below. The approved testing assumption is equal
+weights of separately normalized spectra, not pooled raw counts. Production
+geometry weights must be established separately. No outlier rejection is
 silently imposed. `--cross-section` overrides the header only when explicitly set.
 
-Every sample writes raw weighted bin sums, event-level sum-of-outer-products,
-all-event weight sums, input hash, config and raw/weighted cut flow (NPZ + JSON).
+Every sample writes raw weighted bin sums, per-jet squared weights, event-level
+sum-of-outer-products, all-event weight sums, cross-section entries keyed by
+original input identity, input hash, config and raw/weighted cut flow (NPZ + JSON).
 PbPb design IDs are mandatory and checked when merging and exporting; the
 common pp reference has no design ID. Confirm the declared ID against the
 actual generator parameters: the event format does not encode them. The stratum
@@ -148,9 +175,16 @@ Pool independent chunks of the same pThat stratum before normalization:
   --output results/dr12/pp_pthat200_400.npz
 ```
 
-Merge requires identical sample definitions and cross sections. If independent
-jobs estimate different cross sections, choose the production-level common
-cross section explicitly rather than silently averaging. Different, nonoverlapping
+Merge requires identical sample definitions, but permits different cross-section
+estimates from independent original inputs. `legacy_input_file_mean` pools
+the raw counts and all-event weights, then uses the arithmetic mean of sigma
+over original histogram input files, matching the inspected ROOT path. This is
+per original input file, not once per generator job or once per event. It is a
+compatibility convention, not a new optimal cross-section estimator.
+The default normalization identity is the input SHA256. When computationally
+subdividing one original file, supply the same `--normalization-id` for those
+pieces so sigma is counted once; do not give different original parquet files
+one shared job identity. Same-identity sigma disagreements fail. Different, nonoverlapping
 pThat strata are listed separately in the export manifest; their normalized
 cross sections are added. User-supplied stratum labels cannot prove phase-space
 coverage or nonoverlap: check generator cuts. Repeated stratum/source hashes fail.
@@ -170,6 +204,26 @@ data_table: Data__5020__PbPb__inclusive_jet__dr12_atlas__R1.0_pt200-251_trk4_zcu
 design_table: Design__Lres-E-loss.dat
 ```
 
+For separately generated subcentralities, replace a design point's list with:
+
+```yaml
+design_points:
+  0:
+    centrality_components:
+      - centrality: [0, 5]
+        weight: 0.5
+        samples: [design0_0-5_pooled.npz]
+      - centrality: [5, 10]
+        weight: 0.5
+        samples: [design0_5-10_pooled.npz]
+```
+
+Components must cover the target without gaps/overlaps, have disjoint sources,
+and weights summing to one. Each component is normalized first. Independent
+component covariances receive squared weights; the common pp denominator is
+propagated once after mixing. Independence of the generated subcentrality
+samples is an explicit assumption.
+
 ```bash
 .venv/bin/python -m jetscape_analysis.analysis.atlas_dr12 export \
   --manifest /path/to/manifest.yaml --output results/dr12/tables
@@ -178,12 +232,16 @@ design_table: Design__Lres-E-loss.dat
 The output uses the existing `Data/`, `Design/`, `Prediction/` layout with
 `design_pointN` columns and values/errors files. Data bins and design IDs are
 validated; original Data and Design files are copied unchanged. The error table
-contains propagated **MC statistics**, not experimental errors. A covariance
-sidecar retains same-event bin covariance; the current Bayesian error-table
+contains propagated **MC statistics**, not experimental errors. Default
+`mc_error: per_jet` uses sum(w^2 * number_of_jets_in_bin), matching ROOT Sumw2.
+Optional `mc_error: event` uses event-level outer products, including same-event
+bin covariance. Both raw accumulators are saved; the exported covariance sidecar
+uses the selected convention (diagonal by default). The Bayesian error-table
 reader does not automatically use this sidecar. A shared pp reference also
-correlates predictions across design points. Cross-section estimation uncertainty
-is not added; per-event MC errors treat sigma/sumw as fixed, like the existing
-histogram normalization. Zero numerator/denominator bins refuse export because
+correlates predictions across design points; that cross-design covariance is
+not stored in the per-design sidecar. Cross-section estimation and denominator
+weight-sum uncertainty are not added: sigma/sumw is treated as fixed, like the
+existing histogram normalization. Zero numerator/denominator bins refuse export because
 their naive Gaussian MC error would be misleading.
 
 sqrt(d12) is recorded simultaneously and can be exported with a separate
@@ -194,15 +252,21 @@ hypotheses, not a recovered ATLAS covariance.
 
 ## Remaining physics validation
 
-Local verification on 2026-10-07: the complete repository pytest suite and the
-end-to-end synthetic smoke test were run. Report:
-`validation/atlas_dr12/pr-review-tests.xml`. The command-line smoke
-reproduced RAA=0.5 in all 15 Delta R12 bins with zero numerical residual; report:
-`validation/atlas_dr12/synthetic_smoke/validation.json`. These are software checks,
-not a closure claim on actual Hybrid/ATLAS spectra.
+Local v4 verification on 2026-10-07: 74 repository tests passed, including
+varying-sigma pooling, computational split/hierarchical-merge invariance,
+50:50 centrality mixing, common-pp error propagation and exact exported values
+and errors. The synthetic command-line smoke checks RAA=0.5 in all 15 bins.
+These are software checks, not closure on actual Hybrid/ATLAS spectra.
 
-No real Hybrid events were available for this implementation test. Before
-inference: confirm the generation/weight/centrality/decay conventions with the
+On 14,370 downloaded real events (5,000 pp, 5,000 PbPb 0-5%, 4,370 PbPb 5-10%),
+the custom walk, upstream Lund/SoftDrop references and independent old heppy
+recombiner formula gave identical selected jets and both binned observables.
+The old marker-zero path changes soft negative-jet counts but not selected jets
+in this sample; synthetic cases do expose a selected-jet difference. This compares
+algorithms on the same ATLAS kt tree, not the complete old container/binary.
+Report: `validation/atlas_dr12/legacy_compatibility_20261007/comparison.json`.
+
+Before inference: confirm the generation/weight/centrality/decay conventions with the
 collaborator; reproduce their pp spectrum and at least one published/existing
 Hybrid benchmark; inspect cut flow, signed-branch rate and statistical coverage;
 then generate the full design bank and validate a separate Delta R12 emulator.

@@ -28,6 +28,8 @@ command = shlex.split(os.environ.get("CXX", "c++")) + [
     str(root / "jetscape_analysis/analysis/atlas_dr12.cc"),
     f"-L{lib}",
     f"-Wl,-rpath,{lib}",
+    "-lfastjetcontribfragile",
+    "-lfastjettools",
     "-lfastjet",
     "-o",
     str(target),

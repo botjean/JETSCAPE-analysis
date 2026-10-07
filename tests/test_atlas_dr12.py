@@ -88,9 +88,34 @@ def test_negative_composite_retains_sign():
 
 
 def test_negative_branch_is_not_a_soft_drop_prong():
-    result = native.reconstruct([row(150), row(80, 0.05), row(80, 0.9, sign=-1, calo=0)])
+    result = native.reconstruct([row(150), row(80, 0.05), row(80, 0.9, sign=-1, calo=0)], groomer="signed_prongs")
     assert result["cutflow"]["negative_splits_skipped"] == 1
     assert result["jets"][0][1] == pytest.approx(0.05)
+
+
+@pytest.mark.parametrize("groomer", ["signed_prongs", "softdrop_reference"])
+def test_upstream_groomers_agree_for_positive_prongs(groomer):
+    for rows in ([row(150), row(80, .4)], [row(160), row(55, .1), row(15, .4)], [row(225)]):
+        expected = native.reconstruct(rows)["jets"]
+        actual = native.reconstruct(rows, groomer=groomer)["jets"]
+        np.testing.assert_allclose(actual, expected, atol=1e-12, rtol=1e-12)
+
+
+def test_heppy_formula_with_negative_marker_agrees():
+    rows = [row(400, .05), row(110, sign=-1), row(110, sign=-1)]
+    reference = native.reconstruct(rows, recombiner_mode="legacy_reference", legacy_marker=-1)
+    assert reference == native.reconstruct(rows)
+    # Explicitly demonstrate non-equivalence of the original default marker 0.
+    lost_sign = native.reconstruct(rows, recombiner_mode="legacy_reference", legacy_marker=0)
+    assert lost_sign["cutflow"]["fiducial_jets"] != reference["cutflow"]["fiducial_jets"]
+
+
+def test_grooming_negative_prong_policy_is_not_claimed_equivalent():
+    rows = [row(150), row(80, .05), row(80, .9, sign=-1, calo=0)]
+    signed = native.reconstruct(rows, groomer="signed_prongs")["jets"][0]
+    legacy = native.reconstruct(rows, groomer="lund")["jets"][0]
+    assert signed[1] == pytest.approx(.05)
+    assert legacy[1] != pytest.approx(signed[1])
 
 
 def test_azimuth_rotation_and_input_order_invariance():
@@ -141,8 +166,61 @@ def test_particle_selection_and_unknown_status():
     e["status"][-1] = -1
     with pytest.raises(ValueError, match="status"):
         analysis.particle_rows(e, "pp")
-    with pytest.raises(ValueError, match="decays"):
-        analysis.particle_properties(111)
+    assert analysis.particle_properties(111) == (True, False)
+
+
+def test_charged_selection_matches_legacy_hybrid():
+    for pid in analysis.CHARGED_PIDS:
+        assert analysis.particle_properties(pid)[1]
+        assert analysis.particle_properties(-pid)[1]
+    assert not analysis.particle_properties(411)[1]  # not in legacy charged list
+
+
+@pytest.mark.parametrize("status", [0, 1, 2])
+def test_pi0_kept_by_default_and_decay_preserves_sign(status):
+    e = event([row(20, 0.3, mass=analysis.PI0_MASS, track=0)])
+    e["particle_ID"] = [111]
+    e["status"] = [status]
+    kept = analysis.particle_rows(e, "PbPb")
+    assert len(kept) == 1
+    np.testing.assert_allclose(kept[0][:4], [e[k][0] for k in ("px", "py", "pz", "E")])
+    qa = {}
+    photons = np.asarray(analysis.particle_rows(e, "PbPb", "decay_gg", 10, qa))
+    assert photons.shape == (2, 7)
+    np.testing.assert_allclose(photons[:, :4].sum(axis=0), kept[0][:4], atol=1e-12)
+    np.testing.assert_allclose(np.sum(photons[:, :3]**2, axis=1), photons[:, 3]**2, atol=1e-12)
+    assert np.all(photons[:, 4] == (-1 if status == 2 else 1))
+    assert np.all(photons[:, 5] == 1) and np.all(photons[:, 6] == 0)
+    assert qa["pi0_decayed"] == 1
+
+
+def test_pi0_decay_reproducible_and_pp_still_excludes_wake():
+    e = event([row(20, mass=analysis.PI0_MASS), row(5, mass=analysis.PI0_MASS, sign=-1)])
+    e["particle_ID"] = [111, 111]
+    a = analysis.particle_rows(e, "pp", "decay_gg", 9)
+    np.testing.assert_array_equal(a, analysis.particle_rows(e, "pp", "decay_gg", 9))
+    assert len(a) == 2
+    assert not np.allclose(a, analysis.particle_rows(e, "pp", "decay_gg", 10))
+
+
+def test_pi0_float32_projection_is_reported_and_bad_input_rejected():
+    p = np.array([1000, 200, 50], dtype=np.float32)
+    energy = float(np.float32(np.sqrt(np.dot(p.astype(float), p) + analysis.PI0_MASS**2)))
+    photons, delta = analysis.decay_pi0_to_photons(p, energy, np.random.default_rng(1))
+    assert sum(e for _, e in photons) == pytest.approx(energy + delta)
+    np.testing.assert_allclose(sum(p for p, _ in photons), p)
+    with pytest.raises(ValueError, match="mass-shell"):
+        analysis.decay_pi0_to_photons([1, 0, 0], 2, np.random.default_rng(1))
+
+
+def test_pi0_mode_provenance_and_config_isolation(config):
+    e = event([row(150), row(80, 0.4), row(2, mass=analysis.PI0_MASS, track=0)])
+    e["particle_ID"][-1] = 111
+    config["pi0_treatment"] = "decay_gg"
+    _, info = analysis.analyze_events([e], config, "pp", None, "all")
+    assert info["particle_qa"]["pi0_decayed"] == 1
+    config["pi0_treatment"] = "keep"
+    assert info["config"]["pi0_treatment"] == "decay_gg"
 
 
 def test_pp_excludes_wake():
