@@ -1,0 +1,112 @@
+{
+  "kind": "NEW_LOCAL_REVIEW_TESTS_NOT_EVENT_REPLAY",
+  "python": "3.12.11 | packaged by conda-forge | (main, Jun  4 2025, 14:45:31) [GCC 13.3.0]",
+  "dependencies": {
+    "numpy": "2.5.3",
+    "scipy": "1.17.1",
+    "pytest": "9.1.1",
+    "PyYAML": "6.0.3",
+    "fastjet": "3.5.2.0",
+    "pybind11": "3.1.0"
+  },
+  "native_requested": false,
+  "groups": [
+    {
+      "group": "source_and_covariance",
+      "returncode": 0,
+      "seconds": 0.591,
+      "command": [
+        "/home/jean/jetscape/JETSCAPE-analysis-atlas-dr12/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-rs",
+        "-p",
+        "no:cacheprovider",
+        "studies/hybrid_lres/tests/test_source_package.py",
+        "tests/test_simulation_covariance.py"
+      ],
+      "output": "........................                                                 [100%]\n24 passed in 0.38s\n"
+    },
+    {
+      "group": "bounded",
+      "returncode": 0,
+      "seconds": 1.577,
+      "command": [
+        "/home/jean/jetscape/JETSCAPE-analysis-atlas-dr12/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-rs",
+        "-p",
+        "no:cacheprovider",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_transport.py",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_bounded_projection.py",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_thinning.py",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_certificate.py",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_float32_certificate.py",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_symmetries.py",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_polygon_repro.py"
+      ],
+      "output": "........................................................................ [ 47%]\n........................................................................ [ 95%]\n......s                                                                  [100%]\n=========================== short test summary info ============================\nSKIPPED [1] studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_polygon_repro.py: Raw event integration is intentionally outside this source package\n150 passed, 1 skipped in 1.34s\n"
+    },
+    {
+      "group": "seed",
+      "returncode": 0,
+      "seconds": 0.713,
+      "command": [
+        "/home/jean/jetscape/JETSCAPE-analysis-atlas-dr12/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-rs",
+        "-p",
+        "no:cacheprovider",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/test_seed_scaling.py",
+        "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/test_collector_patch.py"
+      ],
+      "output": "s..................................ss..................                  [100%]\n=========================== short test summary info ============================\nSKIPPED [3] studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/test_seed_scaling.py: Captured event-derived seed file is not redistributed\n52 passed, 3 skipped in 0.49s\n"
+    },
+    {
+      "group": "strict_first",
+      "returncode": 0,
+      "seconds": 0.274,
+      "command": [
+        "/home/jean/jetscape/JETSCAPE-analysis-atlas-dr12/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-rs",
+        "-p",
+        "no:cacheprovider",
+        "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/test_strict_first.py"
+      ],
+      "output": ".........s...                                                            [100%]\n=========================== short test summary info ============================\nSKIPPED [1] studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/test_strict_first.py: Requires omitted raw-event fixture and executed native runtime\n12 passed, 1 skipped in 0.11s\n"
+    }
+  ],
+  "scope": "Release fix: source and pure-Python/local guards only; no native build or native rerun.",
+  "source_verification": {
+    "packaged_files": 82,
+    "external_heppy_records": 4,
+    "preserved_dr12_files": 3,
+    "manifest_sha256": "32c0fe5d3c869d206faa706d21aeaacd23c5ba5562db1765d8dbaab73d619c88",
+    "default_without_heppy_passed": true,
+    "optional_existing_pinned_heppy_four_hashes_passed": true
+  },
+  "historical_native_evidence": {
+    "SOURCE_MANIFEST.json": {
+      "path": "studies/hybrid_lres/provenance/review_v1_86_files/SOURCE_MANIFEST.json",
+      "sha256": "477e6234db54887599a53d8cec74b7017450253d4da65f65a1ffdf921b811ca6"
+    },
+    "TEST_EVIDENCE.json": {
+      "path": "studies/hybrid_lres/provenance/review_v1_86_files/TEST_EVIDENCE.json",
+      "sha256": "4792fbf9796b8ae67b5c307f280afeedd32772dcfa98b00cda2aa142d905b2b4"
+    },
+    "TEST_RESULTS.md": {
+      "path": "studies/hybrid_lres/provenance/review_v1_86_files/TEST_RESULTS.md",
+      "sha256": "42e687dba840835db21fdb64c4dadc9945c79c306dc205c085eaad99cc840e35"
+    }
+  },
+  "historical_native_evidence_scope": "348 passed/15 skipped before release fix; unchanged accepted evidence, not rerun.",
+  "scipy_origin": "Existing workspace wake_nuisance_20261017/full_bank/vendor via explicit PYTHONPATH; not packaged."
+}

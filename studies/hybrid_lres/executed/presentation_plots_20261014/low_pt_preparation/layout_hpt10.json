@@ -1,0 +1,304 @@
+[
+  {
+    "name": "5020__PbPb__hadron__pt_ch_alice____0-5",
+    "centrality": [
+      0,
+      5
+    ],
+    "edges": [
+      10.0,
+      13.0,
+      20.0,
+      30.0,
+      50.0
+    ],
+    "column_pp": "hadron_pt_ch_alice",
+    "column_aa": "hadron_pt_ch_alice"
+  },
+  {
+    "name": "5020__PbPb__hadron__pt_ch_alice____5-10",
+    "centrality": [
+      5,
+      10
+    ],
+    "edges": [
+      10.0,
+      13.0,
+      20.0,
+      30.0,
+      50.0
+    ],
+    "column_pp": "hadron_pt_ch_alice",
+    "column_aa": "hadron_pt_ch_alice"
+  },
+  {
+    "name": "5020__PbPb__hadron__pt_ch_atlas____0-5",
+    "centrality": [
+      0,
+      5
+    ],
+    "edges": [
+      10.0,
+      11.5,
+      13.2,
+      15.1,
+      17.3,
+      20.0,
+      23.0,
+      26.0,
+      30.0,
+      37.5,
+      47.5,
+      60.0,
+      75.0,
+      95.0,
+      120.0,
+      150.0,
+      190.0,
+      240.0,
+      300.0
+    ],
+    "column_pp": "hadron_pt_ch_atlas",
+    "column_aa": "hadron_pt_ch_atlas"
+  },
+  {
+    "name": "5020__PbPb__hadron__pt_ch_atlas____5-10",
+    "centrality": [
+      5,
+      10
+    ],
+    "edges": [
+      10.0,
+      11.5,
+      13.2,
+      15.1,
+      17.3,
+      20.0,
+      23.0,
+      26.0,
+      30.0,
+      37.5,
+      47.5,
+      60.0,
+      75.0,
+      95.0,
+      120.0,
+      150.0,
+      190.0,
+      240.0,
+      300.0
+    ],
+    "column_pp": "hadron_pt_ch_atlas",
+    "column_aa": "hadron_pt_ch_atlas"
+  },
+  {
+    "name": "5020__PbPb__hadron__pt_ch_cms____0-5",
+    "centrality": [
+      0,
+      5
+    ],
+    "edges": [
+      12.0,
+      14.4,
+      19.2,
+      24.0,
+      28.8,
+      35.2,
+      41.6,
+      48.0,
+      60.8,
+      73.6,
+      86.4,
+      103.6,
+      120.8,
+      140.0,
+      165.0,
+      250.0,
+      400.0
+    ],
+    "column_pp": "hadron_pt_ch_cms",
+    "column_aa": "hadron_pt_ch_cms"
+  },
+  {
+    "name": "5020__PbPb__hadron__pt_ch_cms____5-10",
+    "centrality": [
+      5,
+      10
+    ],
+    "edges": [
+      12.0,
+      14.4,
+      19.2,
+      24.0,
+      28.8,
+      35.2,
+      41.6,
+      48.0,
+      60.8,
+      73.6,
+      86.4,
+      103.6,
+      120.8,
+      140.0,
+      165.0,
+      250.0,
+      400.0
+    ],
+    "column_pp": "hadron_pt_ch_cms",
+    "column_aa": "hadron_pt_ch_cms"
+  },
+  {
+    "name": "5020__PbPb__inclusive_chjet__tg_alice__R0.2_zcut0.2_beta0__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      0.0,
+      0.1,
+      0.15,
+      0.22,
+      0.3,
+      0.4,
+      0.5,
+      0.7,
+      1.0
+    ],
+    "column_pp": "inclusive_chjet_tg_alice_R0.2_zcut0.2_beta0",
+    "column_aa": "inclusive_chjet_tg_alice_R0.2_zcut0.2_beta0_negative_recombiner",
+    "self_normalized": true
+  },
+  {
+    "name": "5020__PbPb__inclusive_jet__dr12_atlas__R1.0_pt200-251_trk4_zcut0.15_beta0__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      0.0,
+      0.0025,
+      0.01,
+      0.0225,
+      0.04,
+      0.0625,
+      0.09,
+      0.1225,
+      0.16,
+      0.2025,
+      0.25,
+      0.3025,
+      0.4225,
+      0.64,
+      0.81,
+      1.0
+    ],
+    "source": "dr12"
+  },
+  {
+    "name": "5020__PbPb__inclusive_jet__pt_alice__R0.2__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      40.0,
+      50.0,
+      60.0,
+      70.0,
+      80.0,
+      100.0,
+      120.0,
+      140.0
+    ],
+    "column_pp": "inclusive_jet_pt_alice_R0.2",
+    "column_aa": "inclusive_jet_pt_alice_R0.2_negative_recombiner"
+  },
+  {
+    "name": "5020__PbPb__inclusive_jet__pt_alice__R0.4__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      60.0,
+      70.0,
+      80.0,
+      100.0,
+      120.0,
+      140.0
+    ],
+    "column_pp": "inclusive_jet_pt_alice_R0.4",
+    "column_aa": "inclusive_jet_pt_alice_R0.4_negative_recombiner"
+  },
+  {
+    "name": "5020__PbPb__inclusive_jet__pt_atlas__R0.4__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      100.0,
+      112.0,
+      125.0,
+      141.0,
+      158.0,
+      177.0,
+      199.0,
+      223.0,
+      251.0,
+      281.0,
+      316.0,
+      354.0,
+      398.0,
+      501.0,
+      630.0,
+      999.0
+    ],
+    "column_pp": "inclusive_jet_pt_atlas_R0.4",
+    "column_aa": "inclusive_jet_pt_atlas_R0.4_negative_recombiner"
+  },
+  {
+    "name": "5020__PbPb__inclusive_jet__pt_cms__R0.2__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      300.0,
+      400.0,
+      500.0,
+      1000.0
+    ],
+    "column_pp": "inclusive_jet_pt_cms_R0.2",
+    "column_aa": "inclusive_jet_pt_cms_R0.2_negative_recombiner"
+  },
+  {
+    "name": "5020__PbPb__inclusive_jet__pt_cms__R0.3__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      300.0,
+      400.0,
+      500.0,
+      1000.0
+    ],
+    "column_pp": "inclusive_jet_pt_cms_R0.3",
+    "column_aa": "inclusive_jet_pt_cms_R0.3_negative_recombiner"
+  },
+  {
+    "name": "5020__PbPb__inclusive_jet__pt_cms__R0.4__0-10",
+    "centrality": [
+      0,
+      10
+    ],
+    "edges": [
+      400.0,
+      500.0,
+      1000.0
+    ],
+    "column_pp": "inclusive_jet_pt_cms_R0.4",
+    "column_aa": "inclusive_jet_pt_cms_R0.4_negative_recombiner"
+  }
+]

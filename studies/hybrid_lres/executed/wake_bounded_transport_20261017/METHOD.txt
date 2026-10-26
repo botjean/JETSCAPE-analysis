@@ -1,0 +1,135 @@
+BOUNDED, SEPARATE-SIGN, PAPER-INSPIRED WAKE SENSITIVITY
+
+This is a new local candidate, not a change to the original analysis. It is
+not Efficient Wake, a shower-level implementation of that paper, or a calibrated
+theoretical uncertainty. No cluster rerun is implied by creating these files.
+
+Paper input retained
+-------------------
+Reuse the existing fit to Fig.6 of arXiv:2609.10679v1 and its massless signed
+Hybrid reference (arXiv:1609.05842). The frozen 50-GeV fit supplies positive/
+negative pT scales h_s(a), positive azimuth/rapidity contractions and population
+amplitudes. a is ONE global scalar in [0,1], shared across design points and
+observables. The frozen calibration and log-interpolation path are unchanged.
+The paper's negative angular region is a net deficit; it is not by itself a
+measurement of the generator's separately tagged negative-particle population.
+Transferring that signed template to our two finite particle pools is an
+additional ansatz, not a published particle-by-particle prescription.
+
+The particle-level TRANSVERSE ENVELOPE is now a hard implementation constraint:
+  pT_final_i <= h_sign(a) * pT_original_i.
+This is an envelope derived from our fitted proposal, NOT a universal QCD bound
+or a claim that the paper prescribes this finite-event transfer rule. There is
+no arbitrary absolute pT cap, clipping of a finished event, or hard recoil.
+
+Budget and population selection
+-------------------------------
+Pminus denotes the unsigned positive-energy four-vector of negative wake rows.
+For a chosen fraction f, set
+  target_minus = f*Pminus;
+  target_plus  = Pplus-Pminus+target_minus.
+The signed difference is exactly the original wake four-vector. f<=1 bounds
+both unsigned sign energies by their original energies, in every frame.
+The requested f is the existing negative amplitude times h_minus.
+
+Use charge-balanced thinning with the existing amplitudes, conditional on >=2
+rows when a sign originally has >=2. Unmatched species charges are protected;
+an original singleton remains present. The conditioning is sampled exactly,
+not through an arbitrary number of rejected random draws. The same event seed
+and random stream are reused for matching event fingerprints. At different a
+the original sampling units match; across designs different particle populations
+need not have a one-to-one unit match. Cross-design and cross-a noise is measured
+from the paired event rows, not assumed independent or perfectly correlated.
+
+Priority is EXPLICIT:
+1. Try the requested f with that selected population.
+2. If f=1 is feasible, find the nearest feasible f>=requested within THAT
+   population using the convex feasibility interval.
+3. Otherwise restore ALL omitted rows in the eligible wake and repeat. This
+   deterministic restoration changes the finite-population sampling law and is
+   recorded. We do not claim a globally optimal population or globally closest f.
+
+An original singleton or absent positive sign can force f=1. That does NOT
+silently bypass the entire event: the other sign is still transformed subject
+to conservation and its pT envelope. No failed whole event is dropped or replaced
+by an unreported identity result. Inherited no-hard-axis / <8-eligible-row cases
+retain the original event and explicit QA flags. Spacelike input rows and exact
+zero-transverse-mass rows are retained bytewise, not repaired.
+
+Why a feasible endpoint exists
+------------------------------
+Restoring all eligible original particles and f=1 permits d_s=1/h_s, which
+recovers their original pT. Their original angles/rapidities then give an exact
+existence certificate with unchanged masses/charges. Failure to find any valid
+conserving state is still fatal: existence is not an excuse to accept a bad
+numerical answer. An optional analytic seed may fail without invalidating an
+already conserved Newton solution.
+
+Bounded per-sign construction
+----------------------------
+Work in one common longitudinal frame only. For each sign choose a common
+downward pT multiplier d_s<=1. It multiplies the proposed h_s*pT_original.
+Allowed d obey both the transverse polygon bounds and
+  sum_i sqrt(m_i^2 + d_s^2*cap_i^2) <= sqrt(E_target^2-Pz_target^2).
+Singletons require equality, not just this inequality; zero-mT padding cannot
+create an extra longitudinal degree of freedom.
+
+Within the allowed d interval, match the proposed longitudinal invariant mass
+when possible. Then only a common rapidity boost is needed, preserving proposed
+rapidity spread. Otherwise choose its closest endpoint and solve the required
+rapidity spread explicitly; this distortion is measured, not declared absent.
+Azimuth angles solve their independent transverse polygon. A bounded Newton
+start and a constructive geometric start are compared, then a few conservative
+null-space descent steps reduce angular displacement without changing pT or the
+target. This is not a global-minimum claim.
+
+For sub-ULP transverse polygon sides, the analytic constructor first retains
+their proposed azimuths and subtracts their FULL vector sum from the resolved
+polygon target. Those particles and momenta are not removed or set to zero.
+The recombined full vector is verified against the same conservation tolerance.
+This only handles floating-point geometry; it does not loosen the pT envelope,
+mass-shell or four-momentum checks.
+
+The final float64 rows, which native reconstruction actually receives, must
+satisfy the original mass-shell and signed-four-momentum tolerances, positive
+unsigned sign energies, species charges, unchanged non-wake rows and rapidity
+guard. Each final pT is checked against its own envelope. No unrestricted
+three-momentum or sign-rest-frame energy redistribution is allowed.
+
+What is and is not guaranteed
+----------------------------
+The particlewise envelope prevents the previous 100--353-GeV artificial wake
+tail when the original scaled particles are soft. It does NOT prove that all
+possible inputs have pT<10/30 GeV, prevent collective jet shifts, certify native
+grooming for every design, or establish hydrodynamic shape fidelity.
+
+The actual h_s*d_s may be <1, especially in negative sectors with a few massive,
+charge-protected particles. Negative hardening, fitted amplitudes and proposed
+angular shapes are NOT promised after exact finite-event conservation. Those
+differences must be shown alongside results; a means requested deformation,
+not exact agreement with the published massless single-parton template.
+
+Nearest outgoing hard-parton axes are still a transfer assumption because no
+true wake deposition ancestry is stored. Missing joint/species information,
+finite massive populations, the separate-sign budget ansatz and conditional
+restoration remain model choices. Even with nuisance marginalization this is
+only a sensitivity test.
+
+Local validation and plotting
+-----------------------------
+The source-pinned local runner uses identical events across nodes and methods,
+unchanged native reconstruction, original shared pp moments, full-production
+cross sections and established centrality normalizations. It stores paired
+counts, full across-node/observable covariance, exact untruncated profile
+moments, and binned profiles. It checks covariance PSD without a PSD projection,
+bitwise original baseline reproduction and unchanged hadron counts on the local
+sample whose charged-wake envelope is below10GeV.
+
+Full comparison: original, previous joint projection, proposed shape, and new
+bounded map. Show positive/negative pT and angular profiles, high-pT tails,
+population restoration, f and d changes, conservation residuals and observable
+responses. Simulation bands are MC errors, not posterior or theory-error bands.
+Native guard failures stop the test; none are assigned guessed splitting bins.
+
+Old rejected sources/results remain untouched. Main tables, emulators, priors,
+PC choices, experimental covariance and inference are not changed by this test.

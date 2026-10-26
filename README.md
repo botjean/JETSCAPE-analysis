@@ -1,5 +1,9 @@
 # JETSCAPE-analysis
 
+Paper-observable source review: see [studies/hybrid_lres](studies/hybrid_lres/README.md).
+The rg extension is opt-in and requires an optional native build. The paper
+sensitivity snapshot is not a production default or a portable event-replay tool.
+
 This repository contains basic tools to generate and analyze Jetscape events in HepMC3 and/or Ascii format.
 
 It is written entirely in python – leveraging c++ underneath where necessary – no compilation necessary!

@@ -1,0 +1,708 @@
+{
+  "schema": "hybrid-lres-source-review-v2-external-heppy",
+  "base_commit": "29060da6a216ae1d68fb6d1b3bdcd889d6a2a6cf",
+  "upstream_analysis_base": "057ea21b8da6a0784e9cd557d967edceaec363aa",
+  "heppy_commit": "16fcefbdca7a106e6e74fd53e904e302335dcce3",
+  "files": [
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/config/atlas_rg_5020_candidate.yaml",
+      "path": "config/atlas_rg_5020_candidate.yaml",
+      "sha256": "c680f2ca611c13829b89f30c3c4dc6580700a5df095ab5acab07590cfc861dee",
+      "bytes": 760,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/config/atlas_rg_upstream_candidate.yaml",
+      "path": "config/atlas_rg_upstream_candidate.yaml",
+      "sha256": "2f9213c9f45590bc70b5220be0ec0d546edb1f8077daea2471a80c3199c8683e",
+      "bytes": 685,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/jetscape_analysis/analysis/atlas_rg.cc",
+      "path": "jetscape_analysis/analysis/atlas_rg.cc",
+      "sha256": "0690fa8799f07fa030d60ce91ad3568bc3b12566df68106577c5a02d2687d3ec",
+      "bytes": 5225,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/jetscape_analysis/analysis/atlas_rg.py",
+      "path": "jetscape_analysis/analysis/atlas_rg.py",
+      "sha256": "c554344a834a8a468b8bb9c0691dc4ff887ea6b509105f6cf78f8390b606ed04",
+      "bytes": 24516,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/jetscape_analysis/analysis/simulation_covariance.py",
+      "path": "jetscape_analysis/analysis/simulation_covariance.py",
+      "sha256": "5e5f85eb59485e8520abfcb04ac5ab1892292280a295bba2fe2bb83d382a3186",
+      "bytes": 11769,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/scripts/build_atlas_rg.py",
+      "path": "scripts/build_atlas_rg.py",
+      "sha256": "6ffa5aa1a1715d1508f85a3ed4ef3519eebefca01f83db7486e1b27b0d1b8870",
+      "bytes": 1078,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_implementation_20261015/upstream_native/rg_upstream.cc",
+      "path": "studies/hybrid_lres/executed/atlas_rg_implementation_20261015/upstream_native/rg_upstream.cc",
+      "sha256": "54251ad48891cc52b5a899f7a577eb6f7b5c4343abc69c860e5f4afc797371a3",
+      "bytes": 6745,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_candidate_local/generated_native.cc",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_candidate_local/generated_native.cc",
+      "sha256": "5256515075c98f3d34e7a3217bea54d7ff1f8f97d73cf03fde5573b2482a36af",
+      "bytes": 17469,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_candidate_local/precision_native.cc",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_candidate_local/precision_native.cc",
+      "sha256": "0be18d12ff1db023860375714095c0f4345ca787cb92901c992cb4a7d40dc00e",
+      "bytes": 11986,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_candidate_local/test_precision.py",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_candidate_local/test_precision.py",
+      "sha256": "fa1ceffe33ac1a82ebf7df2d04a12af1278b664ea41899a32f71c90cee3b178f",
+      "bytes": 8701,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/build_precision.py",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/build_precision.py",
+      "sha256": "a0ea116758c4927beed075ed6761771ddf20f673e3264b37446294d9a01ce962",
+      "bytes": 1970,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/collect_continuation.py",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/collect_continuation.py",
+      "sha256": "937dde280a6cad4177d4deb3e044cc460fec265fe867a3e748047ba8595f42b0",
+      "bytes": 8987,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/collect_reduced.py",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/collect_reduced.py",
+      "sha256": "b286167008cfa3de5a37329b6b498757c78d3d3368ccc3f3ef15c1188e904b7a",
+      "bytes": 11780,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/strict_first.py",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/strict_first.py",
+      "sha256": "e43691d6d3dc950f69d4e82e707b883375a131a2802239271547bf93ecb06585",
+      "bytes": 3591,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/test_strict_first.py",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/test_strict_first.py",
+      "sha256": "13888500c50d290251c5f23fc0c55c0a379906a0a8f56d98d173a90157b897f3",
+      "bytes": 6815,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/reduced/collect_reduced.py",
+      "path": "studies/hybrid_lres/executed/atlas_rg_inference_20261015/reduced/collect_reduced.py",
+      "sha256": "c40ad60d8c7bb485256d2c9fbaf0eebd86b7039dd5a40d41f5dc346f28002602",
+      "bytes": 11060,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "cluster-access/simulation-covariance-pilot/simulation_covariance.py",
+      "path": "studies/hybrid_lres/executed/cluster-access/simulation-covariance-pilot/simulation_covariance.py",
+      "sha256": "5e5f85eb59485e8520abfcb04ac5ab1892292280a295bba2fe2bb83d382a3186",
+      "bytes": 11769,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/payload.tar.gz!payload/external_pins.json",
+      "path": "studies/hybrid_lres/executed/nominal_payload/external_pins.json",
+      "sha256": "4816db2726538c0921818ebe8111f5814c0d90495ca5795b6e2ebbdf62a51682",
+      "bytes": 668,
+      "transformation": "byte-identical",
+      "role": "archived nominal reuse-proof dependency"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/payload.tar.gz!payload/legacy_collect_reduced.py",
+      "path": "studies/hybrid_lres/executed/nominal_payload/legacy_collect_reduced.py",
+      "sha256": "c40ad60d8c7bb485256d2c9fbaf0eebd86b7039dd5a40d41f5dc346f28002602",
+      "bytes": 11060,
+      "transformation": "byte-identical",
+      "role": "archived nominal reuse-proof dependency"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/payload.tar.gz!payload/legacy_rg.py",
+      "path": "studies/hybrid_lres/executed/nominal_payload/legacy_rg.py",
+      "sha256": "e230724aac49d10c180c1e7ee1fc407b6fda2519cca894468258da0900624d8d",
+      "bytes": 21543,
+      "transformation": "byte-identical",
+      "role": "archived nominal reuse-proof dependency"
+    },
+    {
+      "source_workspace_relative": "presentation_plots_20261014/low_pt_preparation/collect_low_pt_bank.py",
+      "path": "studies/hybrid_lres/executed/presentation_plots_20261014/low_pt_preparation/collect_low_pt_bank.py",
+      "sha256": "f71d041b9dc4d46a2ae341bbcca4a7fcca5b152fa8fae535984ab91af2a9b792",
+      "bytes": 6119,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "presentation_plots_20261014/low_pt_preparation/collect_low_pt_gate.py",
+      "path": "studies/hybrid_lres/executed/presentation_plots_20261014/low_pt_preparation/collect_low_pt_gate.py",
+      "sha256": "5184ddf156224960b3f1a5e4d3e048cb56143794d5a5841ba6d35c75d840b382",
+      "bytes": 7405,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "presentation_plots_20261014/low_pt_preparation/layout_hpt10.json",
+      "path": "studies/hybrid_lres/executed/presentation_plots_20261014/low_pt_preparation/layout_hpt10.json",
+      "sha256": "81c3bba706537bc2201fcbdcf1e230d8bad17010a04af44a864de05d970244a0",
+      "bytes": 5087,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/METHOD.txt",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/METHOD.txt",
+      "sha256": "e1301edd2f45cb8b93d0cded50743c55b6b517de304c6112e0c536582f9244ab",
+      "bytes": 7921,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/bank/bounded_data.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/bank/bounded_data.py",
+      "sha256": "97da9ff8b46ca5458bb7fb21747c0cf603bba5844b41d258764b14e773f71af7",
+      "bytes": 19080,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/payload.tar.gz!runtime/wake_bounded_transport_20261017/bank/checkpoint_collect.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/bank/checkpoint_collect.py",
+      "sha256": "ea4b365559ecb3522dea0c2a79cc4905122054813300b0984a23fcbed6d89049",
+      "bytes": 19849,
+      "transformation": "byte-identical",
+      "role": "original endpoint runtime alias; extracted from executed archive"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/bank/collect_bounded.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/bank/collect_bounded.py",
+      "sha256": "b46988cc5dabc9c86ca916ccd8acbb0ae5caf91b8288709aa762f14d131241c3",
+      "bytes": 19763,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/bank/verify_runtime.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/bank/verify_runtime.py",
+      "sha256": "a57051036832a5c38876e1395c2811cf34decc70c9685413c4fafffb1a9b1e61",
+      "bytes": 14343,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/bounded_projection.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/bounded_projection.py",
+      "sha256": "cfcc831231bfefbd12585b2dc2e5d93df6bcce7024a5b87228a482d0357eba8f",
+      "bytes": 12257,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/endpoint_data.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/endpoint_data.py",
+      "sha256": "1cb8b1e82d9caa8e755feea49f5cdcb674f4c6124fee6a9be1536b1024182eb4",
+      "bytes": 19627,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/endpoint_data.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/endpoint_data.py",
+      "sha256": "0ffb47aafbd8de62502d4c33dda5c92c4092c8ad3b481d2fc82f4cd77d5d4801",
+      "bytes": 22384,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/execute.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/execute.py",
+      "sha256": "ded73f1426a0633589c76b4d77d58ab6137c03a1e7812fe68cb0bb469593c0c2",
+      "bytes": 16091,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/checkpoint_collect.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/checkpoint_collect.py",
+      "sha256": "c838a056a5039490085e32c5cdd730f58aab9ba5b05c635069f5124b38b0f290",
+      "bytes": 20333,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/collector_patch.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/collector_patch.py",
+      "sha256": "4edc5bb85fbad6f5ed4de31646700738e23f8c535746f52b9339a824f53978cc",
+      "bytes": 6041,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/endpoint_data.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/endpoint_data.py",
+      "sha256": "cedbc5a683c08e5d799892b4055c67e468bfb2b52032ec4126f5483b75cea7a0",
+      "bytes": 25978,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/execute.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/execute.py",
+      "sha256": "c6b666cf7f369c417e7dc7c7036b8bf2afebaf202db990192090fd217a55d3da",
+      "bytes": 13862,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/seed_scaling.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/seed_scaling.py",
+      "sha256": "fe54de1e55f50ebc31ca0c5d576356fe7786f154f78c22426c5c7fb10c811a6b",
+      "bytes": 2702,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/test_collector_patch.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/test_collector_patch.py",
+      "sha256": "61d3b4e07e302da166f93ec2fa1320b89d2c28ea85656722e8a4b697027dae4f",
+      "bytes": 8641,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/test_seed_scaling.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/test_seed_scaling.py",
+      "sha256": "f9b257933a5790ace2fcdb6967fd2041484208bd967f9bc07e446073af93a045",
+      "bytes": 11927,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/dr12_policy.cc",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/dr12_policy.cc",
+      "sha256": "8ee224838a2bdcab1268c0620c30e8f71f002995e48bf5ca64b49b20ba0687aa",
+      "bytes": 10025,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/execute.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/execute.py",
+      "sha256": "7dbee7856b9a320cca3de80546181b68881fb2d49485204aa06b453b32c32e87",
+      "bytes": 13232,
+      "transformation": "byte-identical",
+      "role": "executed reconstruction bootstrap, not a scheduling controller"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/test_native_policy.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/test_native_policy.py",
+      "sha256": "bc8ceb0f1881d5b1614f3b0874a028e87937677e124cdc4017eeb39e3f0aeeaa",
+      "bytes": 15936,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/test_bounded_projection.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_bounded_projection.py",
+      "sha256": "0bb3ccdce90ce03b1c79756dcb559cd9b5afcd817a36b0e37225f4b9c480ec4a",
+      "bytes": 6639,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/test_certificate.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_certificate.py",
+      "sha256": "99058fce5c3b9f564b6254683ec698e04856aeaec8727cfb16cec20f863d59c9",
+      "bytes": 2144,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/test_float32_certificate.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_float32_certificate.py",
+      "sha256": "d889998a3888d04e98d12b3809754133286280fe94c1f8879f83790b2b4fc1c5",
+      "bytes": 1677,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/test_polygon_repro.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_polygon_repro.py",
+      "sha256": "2428542f9bcd9d177a7f9a21ec188c00e5775786baf95a463f7a73c79ce94dba",
+      "bytes": 9147,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/test_symmetries.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_symmetries.py",
+      "sha256": "0aa3f5c27f77ab41d1e8a48e66f3772b5e51fab36c8693878bcbfcd7d8d25c1c",
+      "bytes": 1885,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/test_thinning.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_thinning.py",
+      "sha256": "2c7f936b33a6196f84b6336f7fffb88706ea134ed57b04f7f1a1ddbfe171da14",
+      "bytes": 5708,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/test_transport.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/test_transport.py",
+      "sha256": "bc98359667538fb913e932deed2077924c31d939ab1cbd32c7f8f6fc2232fc51",
+      "bytes": 9087,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/thinning.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/thinning.py",
+      "sha256": "4ca5e559ca867ed5e3da6594f82491dbbe1d31f730da625468a2effeb10efc25",
+      "bytes": 3696,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/transport.py",
+      "path": "studies/hybrid_lres/executed/wake_bounded_transport_20261017/transport.py",
+      "sha256": "e040fbf6801ff4e3e819762fe188fb5029b9ff4a36a5d29039aeebcf9eeae104",
+      "bytes": 10323,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/build_gate.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/build_gate.py",
+      "sha256": "333c2b8ed7230866b66940cf7e268220797d9b942c5f6c365ab208b36ec4f5da",
+      "bytes": 1708,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/collect_gate.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/collect_gate.py",
+      "sha256": "c0dd506b8b957ec17acc9a4f87f0af2cb9879dc05d4c17950d199ebcd602e34f",
+      "bytes": 9730,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/full_bank/collect_full.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/full_bank/collect_full.py",
+      "sha256": "397dce444f031768159886593a0b28a156d3d9c206d4c54f5d4bb74e7ceb6457",
+      "bytes": 13804,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/full_bank/compact.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/full_bank/compact.py",
+      "sha256": "fc945c2140003a859356121c11af32cd5f8ad4274e9b5c15e8a00ce752c665af",
+      "bytes": 2026,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/full_bank/full_data.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/full_bank/full_data.py",
+      "sha256": "b273845f81821c01f3b01b2a4d640418e4fb5ffe10057a2a765ac7471c2b2878",
+      "bytes": 13331,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/full_bank/ratio_factors.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/full_bank/ratio_factors.py",
+      "sha256": "b7f7ab385b19a1c9c72cbbb1b5d5ff3893f429999c6d9e0eb034d90987148513",
+      "bytes": 5535,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/full_bank/storage.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/full_bank/storage.py",
+      "sha256": "f83ebac9638bfb7018a6e4dc068f8cbb5bf71abad0de9ddbebbf69f8c636dc9e",
+      "bytes": 848,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/global_a.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/global_a.py",
+      "sha256": "e9053d979c5626c6418596310b2fbac3e5dde448334af859d915f205d92607e3",
+      "bytes": 2376,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_nuisance_20261017/normalization.py",
+      "path": "studies/hybrid_lres/executed/wake_nuisance_20261017/normalization.py",
+      "sha256": "23e264a0e0fa942c39fb6314f34056d06d314acd66ccaa353b09c677ce3e535a",
+      "bytes": 3778,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_paper_morph_20261017/CALIBRATION.json",
+      "path": "studies/hybrid_lres/executed/wake_paper_morph_20261017/CALIBRATION.json",
+      "sha256": "3a7d758e95b92fb7aceb39ee512a3274ae3f326898ce2c046e70452af522aa5c",
+      "bytes": 1692,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_paper_morph_20261017/calibrate.py",
+      "path": "studies/hybrid_lres/executed/wake_paper_morph_20261017/calibrate.py",
+      "sha256": "3aecd494b833c5012172616d80593c0c555ed1463ca2530489f3af9171e90df2",
+      "bytes": 6975,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_paper_morph_20261017/dr12_diagnostic.generated.cc",
+      "path": "studies/hybrid_lres/executed/wake_paper_morph_20261017/dr12_diagnostic.generated.cc",
+      "sha256": "3414970adab6bf75df305cef446326a7eef67ffce873bc071bd04ecd03b61ef9",
+      "bytes": 8799,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_paper_morph_20261017/transport.py",
+      "path": "studies/hybrid_lres/executed/wake_paper_morph_20261017/transport.py",
+      "sha256": "49e00ee83645334a9e0f106ad9b2216d085838ea76a086f60ced398cf79d44ae",
+      "bytes": 12341,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_sensitivity_20261017/deform.py",
+      "path": "studies/hybrid_lres/executed/wake_sensitivity_20261017/deform.py",
+      "sha256": "49192c5b5192e2bf4f34ba233944ba38dcddacc6a89602f0be560e426148ee9a",
+      "bytes": 7890,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_sensitivity_20261017/native.cc",
+      "path": "studies/hybrid_lres/executed/wake_sensitivity_20261017/native.cc",
+      "sha256": "4240a1ffa900ef9fefca06a61de57c6ded528050e286fe5edc1f8525807626e8",
+      "bytes": 3397,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_sensitivity_20261017/run_study.py",
+      "path": "studies/hybrid_lres/executed/wake_sensitivity_20261017/run_study.py",
+      "sha256": "94b8981132db3607d54a620b66611f0c14dd661456b310fd6ef4d65e82a2e6e5",
+      "bytes": 16697,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "wake_sign_separated_20261017/projection.py",
+      "path": "studies/hybrid_lres/executed/wake_sign_separated_20261017/projection.py",
+      "sha256": "2500a99ec2e043004b426703297a8f643dec33788872e7318e8d9c5d2d3275a2",
+      "bytes": 6153,
+      "transformation": "byte-identical",
+      "role": "executed sensitivity/import/validation snapshot"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_implementation_20261015/fjcontrib-1.051/LundPlane/COPYING",
+      "path": "studies/hybrid_lres/native/vendor/COPYING.LundPlane",
+      "sha256": "0e197ef01ba25e5d52aeb1da68d6552475a26776295988e359dbcfc4ef3518cb",
+      "bytes": 18200,
+      "transformation": "byte-identical",
+      "role": "pinned third-party source or license"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_implementation_20261015/fjcontrib-1.051/LundPlane/LundGenerator.cc",
+      "path": "studies/hybrid_lres/native/vendor/LundGenerator.cc",
+      "sha256": "ab62104dd1e33b4a48ba0cd9c3ea1da45a9151f10c7539ea4a9e5ddeb19839b2",
+      "bytes": 2564,
+      "transformation": "byte-identical",
+      "role": "pinned third-party source or license"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_implementation_20261015/fjcontrib-1.051/LundPlane/LundGenerator.hh",
+      "path": "studies/hybrid_lres/native/vendor/LundGenerator.hh",
+      "sha256": "435f818008cf88ee24b21af4a144f902e0c82b41bfe8b61d5699a17f216fa745",
+      "bytes": 4843,
+      "transformation": "byte-identical",
+      "role": "pinned third-party source or license"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/SOURCE_SHA256SUMS",
+      "path": "studies/hybrid_lres/provenance/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/SOURCE_SHA256SUMS",
+      "sha256": "e9e50d74399a2aecc17e6362298519e034a95a9d5013e5853f096f1982465cf3",
+      "bytes": 2383,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/timeout_completion/CONTROL_MANIFEST.json",
+      "path": "studies/hybrid_lres/provenance/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/timeout_completion/CONTROL_MANIFEST.json",
+      "sha256": "1318f265121c001aa9b74651e05267af6feb4b0992b94d767a423e543c5ba8cb",
+      "bytes": 18605,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "atlas_rg_inference_20261015/recovery_20261016/precision_continuation/timeout_completion/export/FINALIZED.json",
+      "path": "studies/hybrid_lres/provenance/atlas_rg_inference_20261015/recovery_20261016/precision_continuation/timeout_completion/export/FINALIZED.json",
+      "sha256": "7667436e3f62f9366dfb15fe54df4bf1e4e777ad4ed849113c46170f94de65e5",
+      "bytes": 770,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/PREPARED.json",
+      "path": "studies/hybrid_lres/provenance/wake_bounded_transport_20261017/endpoint_bank/PREPARED.json",
+      "sha256": "4dec884a92e9e84078e4a6e1e6e516ad497a036151fbec80ae2c67e092241378",
+      "bytes": 5818,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/CONTROL.json",
+      "path": "studies/hybrid_lres/provenance/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/CONTROL.json",
+      "sha256": "bb422ba7df3e3bf9c08953ddc343b802819995e6f09af05a6f63305a4506fb11",
+      "bytes": 7718,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/PREPARED.json",
+      "path": "studies/hybrid_lres/provenance/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/PREPARED.json",
+      "sha256": "b6e575693be34006684bbc82ec338f57bfa9d0f2c6b8e1ca9b01d8b73d69b76f",
+      "bytes": 5167,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/export/COMPLETE.json",
+      "path": "studies/hybrid_lres/provenance/wake_bounded_transport_20261017/endpoint_bank/physical_prior_restriction/seed_scaling_recovery/export/COMPLETE.json",
+      "sha256": "15be67510398002e8601f59e965c18a931d4e8f821673aef15687393e10fde66",
+      "bytes": 14563,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/COMPATIBILITY.json",
+      "path": "studies/hybrid_lres/provenance/wake_bounded_transport_20261017/endpoint_bank/upstream_hardest_recovery/COMPATIBILITY.json",
+      "sha256": "57cf12869943ff29246aa8217a837f1b785859885c0dc2f0a96c234af785212f",
+      "bytes": 432217,
+      "transformation": "byte-identical",
+      "role": "historical executed receipt; paths are evidence, not defaults"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/tests/test_atlas_rg.py",
+      "path": "tests/test_atlas_rg.py",
+      "sha256": "b577fe68ca773e635c99cabc7e26a9abd5874f32f6f38c50c2b7e40460fe1cbb",
+      "bytes": 17443,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/tests/test_atlas_rg_upstream.py",
+      "path": "tests/test_atlas_rg_upstream.py",
+      "sha256": "6fc83b187467cd01360787572fdd3473c8b8b9493f2d272a6d29348941ee0a3e",
+      "bytes": 4977,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    },
+    {
+      "source_workspace_relative": "JETSCAPE-analysis-atlas-dr12/tests/test_simulation_covariance.py",
+      "path": "tests/test_simulation_covariance.py",
+      "sha256": "695fd5d3ca6e51061764b76b481101f1c4f5d62e90ef92406268f598ae022a65",
+      "bytes": 3435,
+      "transformation": "byte-identical",
+      "role": "nominal opt-in canonical source"
+    }
+  ],
+  "preserved_base_files": {
+    "jetscape_analysis/analysis/atlas_dr12.py": "7dee17e91d8d97472b7f1d7a97707cbfafbc1c981a634a9914e4c534275d3e84",
+    "jetscape_analysis/analysis/atlas_dr12.cc": "165d08cb61398aa74e252d710da9f6a8952e3289655433e052d8854c3941f860",
+    "config/atlas_dr12_5020.yaml": "921602b1e2ab1e50015d10c4e890e1f4a714200387dea722ff3103f305536852"
+  },
+  "external_dependencies": [
+    {
+      "name": "heppy",
+      "repository": "https://github.com/matplo/heppy.git",
+      "commit": "16fcefbdca7a106e6e74fd53e904e302335dcce3",
+      "distribution": "external-only; no source content packaged",
+      "license_status": "not established; no license assigned by this package",
+      "files": [
+        {
+          "path": "cpptools/src/fjcontrib/custom/GroomerShop.cc",
+          "sha256": "feb3f3925c284d5caf215ccef2f48f9336a7cc4e10b8cd7aaf04232c1f6ae403",
+          "bytes": 11804,
+          "source_workspace_relative": "atlas_rg_implementation_20261015/heppy-upstream/cpptools/src/fjcontrib/custom/GroomerShop.cc",
+          "former_package_path": "studies/hybrid_lres/native/vendor/GroomerShop.cc"
+        },
+        {
+          "path": "cpptools/src/fjcontrib/custom/GroomerShop.hh",
+          "sha256": "a7164bbf6035fa67a2168abcb187818581590186d1c9e43c8177d98f46b74be0",
+          "bytes": 3193,
+          "source_workspace_relative": "atlas_rg_implementation_20261015/heppy-upstream/cpptools/src/fjcontrib/custom/GroomerShop.hh",
+          "former_package_path": "studies/hybrid_lres/native/vendor/GroomerShop.hh"
+        },
+        {
+          "path": "cpptools/src/fjext/fjtools.cxx",
+          "sha256": "e6a56f9fd5824975956bef1016ae63838d1c13eaddc92fd3d6b482f87baf7893",
+          "bytes": 6799,
+          "source_workspace_relative": "atlas_rg_implementation_20261015/heppy-upstream/cpptools/src/fjext/fjtools.cxx",
+          "former_package_path": "studies/hybrid_lres/native/vendor/fjtools.cxx"
+        },
+        {
+          "path": "cpptools/src/fjext/fjtools.hh",
+          "sha256": "abd84d4b3f796146865c4ba9aa893646b39ebb7936bf772dce094b62509534cb",
+          "bytes": 2476,
+          "source_workspace_relative": "atlas_rg_implementation_20261015/heppy-upstream/cpptools/src/fjext/fjtools.hh",
+          "former_package_path": "studies/hybrid_lres/native/vendor/fjtools.hh"
+        }
+      ]
+    }
+  ]
+}

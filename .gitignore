@@ -2,6 +2,11 @@ __pycache__/
 .mypy_cache/
 build/
 jetscape_analysis/analysis/_atlas_dr12*.so
+jetscape_analysis/analysis/_atlas_rg*.so
+jetscape_analysis/analysis/_rg_upstream*.so
+jetscape_analysis/analysis/_rg_upstream_build.json
+studies/hybrid_lres/validation/
+.pytest_cache/
 validation/atlas_dr12/
 jetscape_analysis.egg-info/
 jetscape_analysis/_version.py

@@ -1,0 +1,13 @@
+# Reconstruction is usable; experimental integration bins are NOT yet certified.
+# Public Table18 gives point coordinates only. Never use staged geometric
+# midpoint edges as if they were published histogram edges.
+sqrt_s: 5020
+centrality: [0, 10]
+particle_level: atlas_30ps
+groomer: signed_prongs
+binning_status: publication_reconstruction_unverified
+binning_source: 'https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/PAPERS/HION-2021-09/fig_07a.pdf'
+# Publication-supported internal steps; the first lower bound remains unresolved.
+# These candidate bins are for diagnostics ONLY; export refuses this status.
+rg_edges: [0.003, 0.0041776, 0.0063246, 0.0095748, 0.0144956, 0.0219452,
+           0.0332232, 0.0502972, 0.0761462, 0.115279, 0.174524, 0.264215, 0.4]

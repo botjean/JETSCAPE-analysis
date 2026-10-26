@@ -1,0 +1,14 @@
+# Explicit local candidate. No production/export certification or bank restart.
+sqrt_s: 5020
+centrality: [0, 10]
+particle_level: legacy_diagnostic
+groomer: upstream_signed_prongs
+negative_marker: -1
+reclustering_radius: 1000
+require_all_constituents: true
+zero_energy_geometry_scale_GeV: 0.0001
+binning_status: publication_reconstruction_unverified
+binning_source: 'https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/PAPERS/HION-2021-09/fig_07a.pdf'
+# First bin retained; the original exact integration boundaries remain uncertified.
+rg_edges: [0, 0.003, 0.0041776, 0.0063246, 0.0095748, 0.0144956, 0.0219452,
+           0.0332232, 0.0502972, 0.0761462, 0.115279, 0.174524, 0.264215, 0.4]

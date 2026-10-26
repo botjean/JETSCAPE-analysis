@@ -1,0 +1,56 @@
+[
+  {
+    "energy": 10,
+    "temperature": 0.1450045853539278,
+    "deposition": 8.335485115385168,
+    "parameters": {
+      "positive_pt_scale": 2.376520802477127,
+      "negative_pt_scale": 1.4635997812686505,
+      "positive_phi_scale": 0.5208803494645818,
+      "positive_y_scale": 0.715293904250005
+    },
+    "amplitudes": {
+      "positive": 0.39531144760010417,
+      "negative": 0.26616717882278207
+    },
+    "optimizer_success": true,
+    "old_shape_rmse": 2.9624566563015744e-05,
+    "normalized_rmse": {
+      "pt": 0.06507962444100908,
+      "phi": 0.04888804435093046,
+      "y": 0.01618543415858174
+    },
+    "target_signed_energy_Px": [
+      8.335483229603506,
+      8.335484495099218
+    ],
+    "caveat": "Fit to signed massless single-parton marginals; species, joint structure and shower transfer remain assumptions"
+  },
+  {
+    "energy": 50,
+    "temperature": 0.1450027227296256,
+    "deposition": 18.751390124121446,
+    "parameters": {
+      "positive_pt_scale": 2.5750676216325723,
+      "negative_pt_scale": 1.8679755429234528,
+      "positive_phi_scale": 0.4773932113025737,
+      "positive_y_scale": 0.6756611510804273
+    },
+    "amplitudes": {
+      "positive": 0.36351153931635427,
+      "negative": 0.181475079371201
+    },
+    "optimizer_success": true,
+    "old_shape_rmse": 1.1274347759101317e-05,
+    "normalized_rmse": {
+      "pt": 0.07640247683863888,
+      "phi": 0.04136027606118034,
+      "y": 0.013061006999681535
+    },
+    "target_signed_energy_Px": [
+      18.751385881893533,
+      18.75138872873489
+    ],
+    "caveat": "Fit to signed massless single-parton marginals; species, joint structure and shower transfer remain assumptions"
+  }
+]
