@@ -76,8 +76,8 @@ Ghosts carry association labels, not wake signs; original signed tracks are
 restored before the charged clustering. There is no double subtraction.
 
 This is an explicit **model-side wake prescription**, not something specified
-by the experimental particle-level definition. Local real-event comparisons
-are recorded below; they do not establish production-wide equivalence.
+by the experimental particle-level definition. Reference-comparison tools do
+not establish production-wide equivalence of the available prescriptions.
 In particular, heppy's `NegativeEnergyRecombiner()` defaults its negative
 composite marker to zero. The implementation here uses -1 (equivalent to explicitly
 constructing its recombiner with a negative marker), preserving the sign through
@@ -149,7 +149,7 @@ sections/event weights have the STAT hard-process normalization. These cannot
 be inferred from the file name. Centrality here declares the sample interval;
 it does not turn a 0-5% sample into a 0-10% sample. With a 0-10% target config,
 analyze its inputs using `--centrality 0 5` and `--centrality 5 10`, respectively,
-then use the explicit mixture below. The approved testing assumption is equal
+then use the explicit mixture below. The example testing assumption is equal
 weights of separately normalized spectra, not pooled raw counts. Production
 geometry weights must be established separately. No outlier rejection is
 silently imposed. `--cross-section` overrides the header only when explicitly set.
@@ -252,19 +252,15 @@ hypotheses, not a recovered ATLAS covariance.
 
 ## Remaining physics validation
 
-Local v4 verification on 2026-10-07: 74 repository tests passed, including
-varying-sigma pooling, computational split/hierarchical-merge invariance,
-50:50 centrality mixing, common-pp error propagation and exact exported values
-and errors. The synthetic command-line smoke checks RAA=0.5 in all 15 bins.
+Synthetic tests cover varying-sigma pooling, computational split/merge
+invariance, explicit centrality mixing, common-pp error propagation and exported
+values/errors. The command-line smoke checks an analytic RAA=0.5 example.
 These are software checks, not closure on actual Hybrid/ATLAS spectra.
 
-On 14,370 downloaded real events (5,000 pp, 5,000 PbPb 0-5%, 4,370 PbPb 5-10%),
-the custom walk, upstream Lund/SoftDrop references and independent old heppy
-recombiner formula gave identical selected jets and both binned observables.
-The old marker-zero path changes soft negative-jet counts but not selected jets
-in this sample; synthetic cases do expose a selected-jet difference. This compares
-algorithms on the same ATLAS kt tree, not the complete old container/binary.
-Report: `validation/atlas_dr12/legacy_compatibility_20261007/comparison.json`.
+The optional reference-comparison script accepts caller-provided input files
+and compares the available recombination/grooming paths on the same ATLAS kt
+tree. It does not reproduce an entire external analysis container. Synthetic
+counterexamples demonstrate why the alternatives must not be assumed equivalent.
 
 Before inference: confirm the generation/weight/centrality/decay conventions with the
 collaborator; reproduce their pp spectrum and at least one published/existing
