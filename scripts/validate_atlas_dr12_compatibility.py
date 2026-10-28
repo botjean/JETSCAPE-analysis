@@ -25,7 +25,8 @@ def compare(path, system, limit, config):
     hist = {name: {o: np.zeros(len(b["edges"])-1) for o, b in config["observables"].items()} for name in modes}
     events = 0
     for i, event in enumerate(islice(analysis.read_events(path), limit)):
-        rows = analysis.particle_rows(event, system)
+        rows = analysis.particle_rows(event, system, config.get("pi0_treatment", "keep"),
+                                      config.get("pi0_decay_seed", 0))
         results = {}
         for mode, kwargs in modes.items():
             result = analysis._atlas_dr12.reconstruct(rows, **kwargs)
@@ -56,19 +57,21 @@ def compare(path, system, limit, config):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--inputs", type=Path, required=True, help="Local directory of the three approved pilot files")
+    for name in ("pp", "aa05", "aa510"):
+        p.add_argument("--" + name, type=Path, required=True, help="Caller-provided event file")
+    p.add_argument("--config", type=Path, default=Path("config/atlas_dr12_5020.yaml"))
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--max-events", type=int, default=5000)
     args = p.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
-    config = analysis.load_config(Path("config/atlas_dr12_5020.yaml"))
-    report = dict(version=analysis.VERSION, reference_scope="Same ATLAS kt-tree definition. Heppy recombiner formula and first-passing Lund split verified against cluster source; not the old full container binary.", samples={})
-    for name, filename, system in (
-        ("pp", "HYBRID_pp_0000_final_state_hadrons_00.parquet", "pp"),
-        ("aa05", "HYBRID_PbPb_0000_final_state_hadrons_00.parquet", "PbPb"),
-        ("aa510", "HYBRID_PbPb_5-10_0000_final_state_hadrons_00.parquet", "PbPb"),
+    config = analysis.load_config(args.config)
+    report = dict(version=analysis.VERSION, reference_scope="Available reference algorithms on the same ATLAS kt tree, not an external analysis container.", samples={})
+    for name, path, system in (
+        ("pp", args.pp, "pp"),
+        ("aa05", args.aa05, "PbPb"),
+        ("aa510", args.aa510, "PbPb"),
     ):
-        report["samples"][name] = compare(args.inputs/filename, system, args.max_events, config)
+        report["samples"][name] = compare(path, system, args.max_events, config)
         (args.output/"comparison.json").write_text(json.dumps(report, indent=2)+"\n")
 
 

@@ -79,6 +79,28 @@ def test_prepared_row_hook_preserves_event_counter(config):
     assert actual_qa == expected_qa
 
 
+@pytest.mark.parametrize("groomer", ["signed_prongs", "lund_reference"])
+def test_count_rows_uses_public_groomers(config, groomer):
+    config["groomer"] = groomer
+    counts, qa = analysis.count_rows([row(150), row(50, 0.1)], config)
+    np.testing.assert_array_equal(counts.reshape(3, -1), [[0, 1, 0], [0, 0, 0], [0, 0, 0]])
+    assert qa["pt0_tagged"] == 1
+
+
+@pytest.mark.parametrize("production", [False, True])
+def test_unpublished_groomer_rejected_before_reconstruction(config, production, monkeypatch):
+    config["groomer"] = "upstream_signed_prongs"
+
+    def unexpected_reconstruction(*args):
+        pytest.fail("Unsupported grooming must fail before native reconstruction")
+
+    monkeypatch.setattr(native, "reconstruct", unexpected_reconstruction)
+    with pytest.raises(ValueError, match="grooming"):
+        analysis.validate_config(config, production=production)
+    with pytest.raises(ValueError, match="grooming"):
+        analysis.count_rows([], config)
+
+
 def test_signed_energy_no_duplicate_subtraction_and_negative_prong():
     rows = [row(150), row(70, 0.05), row(80, 0.35, sign=-1)]
     result = native.reconstruct(rows)

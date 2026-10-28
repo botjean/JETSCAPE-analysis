@@ -14,7 +14,6 @@ import json
 import shutil
 from collections import Counter
 from copy import deepcopy
-from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
@@ -28,50 +27,10 @@ VERSION = "atlas-rg-v1"
 PT_BINS = ((158, 200), (200, 315), (315, 501))
 
 
-def _upstream_runtime_libraries():
-    """Fingerprint actually mapped FastJet libraries, not just an intended RPATH."""
-    paths = set()
-    for line in Path("/proc/self/maps").read_text().splitlines():
-        fields = line.split(maxsplit=5)
-        if len(fields) != 6:
-            continue
-        path = fields[5]
-        if Path(path).name.split(".")[0] not in ("libfastjet", "libfastjettools"):
-            continue
-        if path.endswith(" (deleted)"):
-            raise ValueError("Loaded FastJet library was deleted or replaced during extraction")
-        paths.add(Path(path).resolve())
-    if {p.name.split(".")[0] for p in paths} != {"libfastjet", "libfastjettools"}:
-        raise ValueError("Cannot identify the two loaded FastJet runtime libraries")
-    return {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(paths)}
-
-
-def _check_upstream_runtime(backend):
-    manifest = Path(backend.__file__).with_name("_rg_upstream_build.json")
-    info = json.loads(manifest.read_text())
-    if info.get("runtime_dependencies") != _upstream_runtime_libraries():
-        raise ValueError("Loaded FastJet libraries differ from the upstream backend build")
-    return info
-
-
-@lru_cache(maxsize=1)
-def _upstream_backend():
-    from jetscape_analysis.analysis import _rg_upstream
-
-    _check_upstream_runtime(_rg_upstream)
-    return _rg_upstream
-
-
-def reconstruction_hashes(config=None):
+def reconstruction_hashes():
     from jetscape_analysis.analysis import atlas_dr12
 
     paths = [Path(__file__), Path(_atlas_rg.__file__), Path(atlas_dr12.__file__)]
-    if config is not None and config.get("groomer") == "upstream_signed_prongs":
-        _rg_upstream = _upstream_backend()
-        info = _check_upstream_runtime(_rg_upstream)
-        paths.extend([Path(_rg_upstream.__file__),
-                      Path(_rg_upstream.__file__).with_name("_rg_upstream_build.json")])
-        paths.extend(Path(p) for p in info["runtime_dependencies"])
     return {
         path.name: hashlib.sha256(path.read_bytes()).hexdigest()
         for path in paths
@@ -83,16 +42,8 @@ def validate_config(config, production=False):
         raise ValueError("This implementation requires 5020 GeV and target centrality [0,10]")
     if config.get("particle_level") not in ("atlas_30ps", "legacy_diagnostic"):
         raise ValueError("Declare particle_level atlas_30ps or legacy_diagnostic")
-    if config.get("groomer") not in ("signed_prongs", "lund_reference", "upstream_signed_prongs"):
-        raise ValueError("Declare signed_prongs, upstream_signed_prongs or diagnostic lund_reference grooming")
-    if config["groomer"] == "upstream_signed_prongs":
-        scale = config.get("zero_energy_geometry_scale_GeV")
-        if (config.get("reclustering_radius") != 1000
-                or config.get("negative_marker") != -1
-                or config.get("require_all_constituents") is not True
-                or not isinstance(scale, (int, float)) or isinstance(scale, bool)
-                or not np.isfinite(scale) or not 0 <= scale <= .001):
-            raise ValueError("Upstream mode requires explicit signed/preserving reconstruction and geometry scale")
+    if config.get("groomer") not in ("signed_prongs", "lund_reference"):
+        raise ValueError("Declare signed_prongs or diagnostic lund_reference grooming")
     edges = np.asarray(config["rg_edges"], dtype=float)
     if (
         edges.ndim != 1
@@ -105,7 +56,7 @@ def validate_config(config, production=False):
         raise ValueError("Require finite increasing rg edges within [0,.4]")
     if production and (
         config["particle_level"] != "atlas_30ps"
-        or config["groomer"] not in ("signed_prongs", "upstream_signed_prongs")
+        or config["groomer"] != "signed_prongs"
         or config.get("binning_status") != "verified"
         or not config.get("binning_source")
     ):
@@ -149,19 +100,9 @@ def count_rows(rows, config):
     declared particle prescription before reaching this identical counter.
     """
     edges = validate_config(config)
-    if config["groomer"] == "upstream_signed_prongs":
-        _rg_upstream = _upstream_backend()
-        result = _rg_upstream.reconstruct(
-            rows, negative_marker=-1, ca_radius=config["reclustering_radius"],
-            zero_energy_scale=config["zero_energy_geometry_scale_GeV"],
-            grooming_policy="signed_prongs", require_all_constituents=True,
-        )
-    else:
-        result = _atlas_rg.reconstruct(rows, config["groomer"])
+    result = _atlas_rg.reconstruct(rows, config["groomer"])
     counts = np.zeros((3, len(edges) - 1))
     qa = Counter(result["cutflow"])
-    if "geometry_interventions" in result:
-        qa["geometry_interventions"] += result["geometry_interventions"]
     for i, (low, high) in enumerate(PT_BINS):
         selected = [j for j in result["jets"] if j[0] > 158 and low <= j[0] < high]
         tagged = np.array([j[1] for j in selected if j[3]], dtype=float)
@@ -265,7 +206,7 @@ def analyze(event_streams, design_ids, config, system, centrality=None, pairing_
         cutflow=[dict(c) for c in cutflow],
         normalization="per_binary_hard_process",
         covariance="joint_event_poisson_with_denominators",
-        reconstruction_sha256=reconstruction_hashes(config),
+        reconstruction_sha256=reconstruction_hashes(),
     )
 
 

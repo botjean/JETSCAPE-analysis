@@ -44,6 +44,26 @@ def config():
     return analysis.load_config(Path(__file__).parents[1] / "config/atlas_dr12_5020.yaml")
 
 
+@pytest.mark.parametrize("treatment", ["keep", "decay_gg"])
+def test_reference_comparison_forwards_particle_treatment(config, monkeypatch, treatment):
+    import importlib.util
+
+    path = Path(__file__).parents[1] / "scripts/validate_atlas_dr12_compatibility.py"
+    spec = importlib.util.spec_from_file_location("reference_comparison", path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    config.update(pi0_treatment=treatment, pi0_decay_seed=17)
+    seen = []
+    monkeypatch.setattr(analysis, "read_events", lambda path: iter([{"event_weight": 1.}]))
+    def prepare(event, system, particle_treatment, seed):
+        seen.append((particle_treatment, seed))
+        return []
+    monkeypatch.setattr(analysis, "particle_rows", prepare)
+    monkeypatch.setattr(native, "reconstruct", lambda *args, **kwargs: dict(jets=[], cutflow={}))
+    runner.compare(Path("synthetic.parquet"), "pp", 1, config)
+    assert seen == [(treatment, 17)]
+
+
 def test_two_prong_analytic():
     result = native.reconstruct([row(150), row(80, 0.4)])
     assert len(result["jets"]) == 1

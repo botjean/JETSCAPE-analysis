@@ -1,10 +1,11 @@
-"""Analytic checks of the opt-in event covariance producer."""
+"""Analytic checks of caller-aligned event-count covariance utilities."""
 import numpy as np
 import pytest
 
 from jetscape_analysis.analysis.simulation_covariance import (
-    EventMoments, histogram_counts, ratio_map, ratio_bank, validate_alignment,
+    EventMoments, histogram_counts, ratio_map, ratio_bank,
 )
+from jetscape_analysis.analysis import simulation_covariance
 
 
 def test_multiple_jets_same_event_and_cross_observable_covariance():
@@ -62,14 +63,9 @@ def test_shared_pp_creates_cross_design_and_cross_observable_covariance():
     assert np.linalg.eigvalsh(cov.reshape(4, 4)).min() > 0
 
 
-def test_alignment_keeps_empty_events_and_rejects_reordering():
-    obs = dict(event_weight_all=2., event_weight=None, pt_hat=42.)
-    event = dict(event_weight=2., pt_hat=42.)
-    validate_alignment(obs, event)
-    with pytest.raises(ValueError, match='alignment'):
-        validate_alignment(obs, dict(event_weight=2., pt_hat=41.))
-    with pytest.raises(ValueError, match='Accepted-event'):
-        validate_alignment(dict(obs, event_weight=3.), event)
+@pytest.mark.parametrize('name', ['extract', 'main', 'validate_alignment', 'digest'])
+def test_no_saved_stat_adapter_or_weight_only_alignment(name):
+    assert not hasattr(simulation_covariance, name)
 
 
 @pytest.mark.parametrize('values', [[np.nan], [[1., 2.]]])
